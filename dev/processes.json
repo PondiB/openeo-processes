@@ -11191,6 +11191,143 @@
     }
   },
   {
+    "id": "mlm_class_mlp",
+    "summary": "Initialize a Multi-Layer Perceptron (MLP) classification model",
+    "description": "Initializes a Multi-Layer Perceptron (MLP) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "hidden_layer_sizes",
+        "description": "List of integers specifying the number of neurons in each hidden layer.",
+        "default": [
+          512,
+          512,
+          512
+        ],
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 1
+        }
+      },
+      {
+        "name": "activation",
+        "description": "Activation function for the hidden layers.",
+        "optional": true,
+        "default": "relu",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "relu",
+            "tanh",
+            "logistic"
+          ]
+        }
+      },
+      {
+        "name": "dropout_rates",
+        "description": "List of numbers between 0 and 1 specifying the dropout rate for each hidden layer.",
+        "default": [
+          0.4,
+          0.3,
+          0.2
+        ],
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "minItems": 1
+        }
+      },
+      {
+        "name": "epochs",
+        "description": "Number of training epochs.",
+        "optional": true,
+        "default": 100,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "batch_size",
+        "description": "Size of the training batches.",
+        "optional": true,
+        "default": 64,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "optimizer",
+        "description": "The optimizer to use for training.",
+        "optional": true,
+        "default": "adam",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "adam",
+            "adabound",
+            "adabelief",
+            "madagrad",
+            "nadam",
+            "qhadam",
+            "radam",
+            "swats",
+            "yogi"
+          ]
+        }
+      },
+      {
+        "name": "learning_rate",
+        "description": "The learning rate for the optimizer.",
+        "optional": true,
+        "default": 0.001,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "seed",
+        "description": "A randomization seed to use for reproducibility. If not given or `null`, no seed is used and results may differ on subsequent use.",
+        "optional": true,
+        "default": null,
+        "schema": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    ],
+    "returns": {
+      "description": "A model object that can be trained using ``ml_fit``.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
+      }
+    },
+    "links": [
+      {
+        "href": "https://arxiv.org/abs/1611.06455",
+        "title": "Z. Wang, W. Yan, and T. Oates (2017), Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline",
+        "type": "text/html",
+        "rel": "about"
+      }
+    ]
+  },
+  {
     "id": "mlm_class_random_forest",
     "summary": "Initialize a random forest classification model",
     "description": "Initializes a Random Forest classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
@@ -11252,6 +11389,254 @@
       {
         "href": "https://doi.org/10.1023/A:1010933404324",
         "title": "Breiman (2001): Random Forests",
+        "type": "text/html",
+        "rel": "about"
+      }
+    ]
+  },
+  {
+    "id": "mlm_class_tempcnn",
+    "summary": "Initialize a Temporal Convolutional Neural Network (TempCNN) classification model",
+    "description": "Initializes a Temporal Convolutional Neural Network (TempCNN) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "cnn_layers",
+        "description": "List of integers specifying the number of filters in each convolutional layer.",
+        "default": [
+          256,
+          256,
+          256
+        ],
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 1
+        }
+      },
+      {
+        "name": "cnn_kernels",
+        "description": "List of integers specifying the kernel size for each convolutional layer.",
+        "default": [
+          7,
+          7,
+          7
+        ],
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 1
+        }
+      },
+      {
+        "name": "cnn_dropout_rates",
+        "description": "List of numbers between 0 and 1 specifying the dropout rate for each convolutional layer.",
+        "default": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "minItems": 1
+        }
+      },
+      {
+        "name": "dense_layer_nodes",
+        "description": "Number of nodes in the dense layer.",
+        "default": 256,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "dense_layer_dropout_rate",
+        "description": "Dropout rate for the dense layer.",
+        "default": 0.5,
+        "schema": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      {
+        "name": "epochs",
+        "description": "Number of training epochs.",
+        "optional": true,
+        "default": 100,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "batch_size",
+        "description": "Size of the training batches.",
+        "optional": true,
+        "default": 64,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "optimizer",
+        "description": "The optimizer to use for training.",
+        "optional": true,
+        "default": "adam",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "adam",
+            "adabound",
+            "adabelief",
+            "madagrad",
+            "nadam",
+            "qhadam",
+            "radam",
+            "swats",
+            "yogi"
+          ]
+        }
+      },
+      {
+        "name": "learning_rate",
+        "description": "The learning rate for the optimizer.",
+        "optional": true,
+        "default": 0.001,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "seed",
+        "description": "A randomization seed to use for reproducibility. If not given or `null`, no seed is used and results may differ on subsequent use.",
+        "optional": true,
+        "default": null,
+        "schema": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    ],
+    "returns": {
+      "description": "A model object that can be trained using ``ml_fit``.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
+      }
+    },
+    "links": [
+      {
+        "href": "https://doi.org/10.3390/rs11050523",
+        "title": "Pelletier et al. (2019): Temporal Convolutional Neural Network for the Classification of Satellite Image Time Series",
+        "type": "text/html",
+        "rel": "about"
+      }
+    ]
+  },
+  {
+    "id": "mlm_class_xgboost",
+    "summary": "Initialize an XGBoost classification model",
+    "description": "Initializes an XGBoost classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "learning_rate",
+        "description": "Step size shrinkage used in update to prevent overfitting.",
+        "optional": true,
+        "default": 0.15,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "max_depth",
+        "description": "Maximum depth of a tree.",
+        "optional": true,
+        "default": 5,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "min_child_weight",
+        "description": "Minimum sum of instance weight (hessian) needed in a child.",
+        "optional": true,
+        "default": 1,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "subsample",
+        "description": "Subsample ratio of the training instance.",
+        "optional": true,
+        "default": 0.8,
+        "schema": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      {
+        "name": "min_split_loss",
+        "description": "Minimum loss reduction required to make a further partition on a leaf node of the tree.",
+        "optional": true,
+        "default": 1,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "seed",
+        "description": "A randomization seed to use for reproducibility. If not given or `null`, no seed is used and results may differ on subsequent use.",
+        "optional": true,
+        "default": null,
+        "schema": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    ],
+    "returns": {
+      "description": "A model object that can be trained using ``ml_fit``.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
+      }
+    },
+    "links": [
+      {
+        "href": "https://dl.acm.org/doi/10.1145/2939672.2939785",
+        "title": "Chen and Guestrin (2016), XGBoost: A Scalable Tree Boosting System",
         "type": "text/html",
         "rel": "about"
       }
