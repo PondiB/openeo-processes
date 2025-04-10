@@ -11192,7 +11192,7 @@
   },
   {
     "id": "mlm_class_mlp",
-    "summary": "Initialize a Multi-Layer Perceptron (MLP) classification model",
+    "summary": "Initialize an MLP classification model",
     "description": "Initializes a Multi-Layer Perceptron (MLP) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
     "categories": [
       "machine learning"
@@ -11396,7 +11396,7 @@
   },
   {
     "id": "mlm_class_tempcnn",
-    "summary": "Initialize a Temporal Convolutional Neural Network (TempCNN) classification model",
+    "summary": "Initialize a TempCNN classification model",
     "description": "Initializes a Temporal Convolutional Neural Network (TempCNN) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
     "categories": [
       "machine learning"
