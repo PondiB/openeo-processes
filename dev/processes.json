@@ -11142,6 +11142,55 @@
     }
   },
   {
+    "id": "ml_predict_probabilities",
+    "summary": "Predict class probabilities using ML",
+    "description": "Applies a machine learning model to a data cube of input features and returns the predicted class probabilities.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "data",
+        "description": "The data cube containing the input features.",
+        "schema": {
+          "type": "object",
+          "subtype": "datacube"
+        }
+      },
+      {
+        "name": "model",
+        "description": "A ML model that was trained and supports probability predictions.",
+        "schema": {
+          "type": "object",
+          "subtype": "ml-model"
+        }
+      },
+      {
+        "name": "dimensions",
+        "description": "Zero or more dimensions that will be reduced by the model. Fails with a `DimensionNotAvailable` exception if one of the specified dimensions does not exist.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "returns": {
+      "description": "A data cube with the predicted class probabilities. It removes the specified dimensions and adds a new dimension for the class probabilities. The dimension has the name `classes` and is of type `other`. Each label in the dimension represents a class, and the values are the probabilities for each class.",
+      "schema": {
+        "type": "object",
+        "subtype": "datacube",
+        "dimensions": [
+          {
+            "type": "other"
+          }
+        ]
+      }
+    }
+  },
+  {
     "id": "ml_predict",
     "summary": "Predict using ML",
     "description": "Applies a machine learning model to a data cube of input features and returns the predicted values.",
@@ -11189,6 +11238,134 @@
         ]
       }
     }
+  },
+  {
+    "id": "mlm_class_lighttae",
+    "summary": "Initialize a LightTAE classification model",
+    "description": "Initializes a Lightweight Temporal Self-Attention (LightTAE) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "epochs",
+        "description": "Number of training epochs.",
+        "optional": true,
+        "default": 150,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "batch_size",
+        "description": "Size of the training batches.",
+        "optional": true,
+        "default": 128,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "optimizer",
+        "description": "The optimizer to use for training.",
+        "optional": true,
+        "default": "adam",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "adam",
+            "adabound",
+            "adabelief",
+            "madagrad",
+            "nadam",
+            "qhadam",
+            "radam",
+            "swats",
+            "yogi"
+          ]
+        }
+      },
+      {
+        "name": "learning_rate",
+        "description": "The learning rate for the optimizer.",
+        "optional": true,
+        "default": 0.0005,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "epsilon",
+        "description": "A small constant for numerical stability in the optimizer.",
+        "optional": true,
+        "default": 1e-8,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "weight_decay",
+        "description": "Weight decay (L2 penalty) for the optimizer.",
+        "optional": true,
+        "default": 0.0007,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "lr_decay_epochs",
+        "description": "Number of epochs between learning rate decay steps.",
+        "optional": true,
+        "default": 50,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "lr_decay_rate",
+        "description": "Rate at which the learning rate decays.",
+        "optional": true,
+        "default": 1,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "seed",
+        "description": "A randomization seed to use for reproducibility. If not given or `null`, no seed is used and results may differ on subsequent use.",
+        "optional": true,
+        "default": null,
+        "schema": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    ],
+    "returns": {
+      "description": "A model object that can be trained using ``ml_fit``.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
+      }
+    },
+    "links": [
+      {
+        "href": "https://doi.org/10.1007/978-3-030-65742-0_12",
+        "title": "V. S. F. Garnot and L. Landrieu (2020), Lightweight Temporal Self-attention for Classifying Satellite Images Time Series",
+        "type": "text/html",
+        "rel": "about"
+      }
+    ]
   },
   {
     "id": "mlm_class_mlp",
@@ -11389,6 +11566,246 @@
       {
         "href": "https://doi.org/10.1023/A:1010933404324",
         "title": "Breiman (2001): Random Forests",
+        "type": "text/html",
+        "rel": "about"
+      }
+    ]
+  },
+  {
+    "id": "mlm_class_svm",
+    "summary": "Initialize an SVM classification model",
+    "description": "Initializes a Support Vector Machine (SVM) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "kernel",
+        "description": "Specifies the kernel type to be used in the algorithm.",
+        "optional": true,
+        "default": "rbf",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "poly",
+            "rbf",
+            "sigmoid"
+          ]
+        }
+      },
+      {
+        "name": "C",
+        "description": "Regularization parameter. The strength of the regularization is inversely proportional to C. Must be strictly positive.",
+        "optional": true,
+        "default": 1,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "gamma",
+        "description": "Kernel coefficient for 'rbf', 'poly', and 'sigmoid'. Higher values lead to tighter fits.",
+        "optional": true,
+        "default": 1,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "degree",
+        "description": "Degree of the polynomial kernel function (only relevant for 'poly' kernel).",
+        "optional": true,
+        "default": 3,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "coef0",
+        "description": "Independent term in the kernel function (only relevant for 'poly' and 'sigmoid' kernels).",
+        "optional": true,
+        "default": 0,
+        "schema": {
+          "type": "number"
+        }
+      },
+      {
+        "name": "tolerance",
+        "description": "Tolerance of termination criterion.",
+        "optional": true,
+        "default": 0.001,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "cachesize",
+        "description": "Size of the kernel cache in MB.",
+        "optional": true,
+        "default": 1000,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "seed",
+        "description": "A randomization seed to use for reproducibility. If not given or `null`, no seed is used and results may differ on subsequent use.",
+        "optional": true,
+        "default": null,
+        "schema": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    ],
+    "returns": {
+      "description": "A model object that can be trained using ``ml_fit``.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
+      }
+    },
+    "links": [
+      {
+        "href": "https://link.springer.com/article/10.1007/BF00994018",
+        "title": "C. Cortes and V. Vapnik (1995), Support-vector networks",
+        "type": "text/html",
+        "rel": "about"
+      }
+    ]
+  },
+  {
+    "id": "mlm_class_tae",
+    "summary": "Initialize a TAE classification model",
+    "description": "Initializes a Temporal Self-Attention (TAE) classification model. This component sets up the model structure but does not perform training or handle data splitting. The resulting model can be trained later using ``ml_fit``.",
+    "categories": [
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "epochs",
+        "description": "Number of training epochs.",
+        "optional": true,
+        "default": 150,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "batch_size",
+        "description": "Size of the training batches.",
+        "optional": true,
+        "default": 64,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "optimizer",
+        "description": "The optimizer to use for training.",
+        "optional": true,
+        "default": "adam",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "adam",
+            "adabound",
+            "adabelief",
+            "madagrad",
+            "nadam",
+            "qhadam",
+            "radam",
+            "swats",
+            "yogi"
+          ]
+        }
+      },
+      {
+        "name": "learning_rate",
+        "description": "The learning rate for the optimizer.",
+        "optional": true,
+        "default": 0.001,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "epsilon",
+        "description": "A small constant for numerical stability in the optimizer.",
+        "optional": true,
+        "default": 1e-8,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "weight_decay",
+        "description": "Weight decay (L2 penalty) for the optimizer.",
+        "optional": true,
+        "default": 0.000001,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "lr_decay_epochs",
+        "description": "Number of epochs between learning rate decay steps.",
+        "optional": true,
+        "default": 1,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      {
+        "name": "lr_decay_rate",
+        "description": "Rate at which the learning rate decays.",
+        "optional": true,
+        "default": 0.95,
+        "schema": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      {
+        "name": "seed",
+        "description": "A randomization seed to use for reproducibility. If not given or `null`, no seed is used and results may differ on subsequent use.",
+        "optional": true,
+        "default": null,
+        "schema": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    ],
+    "returns": {
+      "description": "A model object that can be trained using ``ml_fit``.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
+      }
+    },
+    "links": [
+      {
+        "href": "https://doi.org/10.1109/CVPR42600.2020.01234",
+        "title": "V. Garnot, L. Landrieu, S. Giordano, and N. Chehata (2020), Satellite Image Time Series Classification With Pixel-Set Encoders and Temporal Self-Attention",
         "type": "text/html",
         "rel": "about"
       }
