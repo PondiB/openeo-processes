@@ -10099,6 +10099,86 @@
     ]
   },
   {
+    "id": "export_cube",
+    "summary": "Export a data cube to a workspace",
+    "description": "Exports a processed data cube to a specified workspace location. This allows for storing preprocessed data (e.g., cloud-removed, gap-filled, aggregated) for later use across various machine learning models.\n\nThe workspace is recommended to be on the server backend,this ensures better performance.",
+    "categories": [
+      "Export",
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "data",
+        "description": "The data cube to be exported. This should be a processed data cube that you want to store for later use.",
+        "schema": {
+          "type": "object",
+          "subtype": "datacube"
+        }
+      },
+      {
+        "name": "name",
+        "description": "The name to be given to the exported data cube. This will be used to identify the data when importing it later.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "folder",
+        "description": "The folder path within the server backend workspace where the data cube should be stored. This helps organize different data cubes within the workspace.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "returns": {
+      "description": "A boolean indicating whether the export was successful.",
+      "schema": {
+        "type": "boolean"
+      }
+    }
+  },
+  {
+    "id": "export_ml_model",
+    "summary": "Export a machine learning model to a workspace",
+    "description": "Exports a machine learning model to a specified workspace location. This is designed for intermediate model storage and can use the backend language's native serialization format.\n\nUnlike save_ml_model, this process doesn't require STAC compliance or specific model formats (like ONNX), making it suitable for temporary storage and transfer of models between processes.",
+    "categories": [
+      "Export",
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "model",
+        "description": "The machine learning model to be exported. This can be in any format supported by the backend implementation.",
+        "schema": {
+          "type": "object",
+          "subtype": "ml-model"
+        }
+      },
+      {
+        "name": "name",
+        "description": "The name to be given to the exported model. This will be used to identify the model when importing it later.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "folder",
+        "description": "The folder path within the server backend workspace where the model should be stored.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "returns": {
+      "description": "A boolean indicating whether the export was successful.",
+      "schema": {
+        "type": "boolean"
+      }
+    }
+  },
+  {
     "id": "filter_labels",
     "summary": "Filter dimension labels based on a condition",
     "description": "Filters the dimension labels in the data cube for the given dimension. Only the dimension labels that match the specified condition are preserved, all other labels with their corresponding data get removed.",
@@ -10446,6 +10526,72 @@
       },
       "TargetDimensionExists": {
         "message": "A dimension with the specified target dimension name already exists."
+      }
+    }
+  },
+  {
+    "id": "import_cube",
+    "summary": "Import a data cube from a workspace",
+    "description": "Imports a previously exported data cube from a specified workspace location. This allows for reusing preprocessed data (e.g., cloud-removed, gap-filled, aggregated) across different machine learning workflows.",
+    "categories": [
+      "Import",
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "name",
+        "description": "The name of the data cube to import. This should match the name used when the data cube was exported.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "folder",
+        "description": "The folder path within the server backend workspace where the data cube is stored. This should match the folder path used when the data cube was exported.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "returns": {
+      "description": "The imported data cube that can be used in subsequent processing steps.",
+      "schema": {
+        "type": "object",
+        "subtype": "datacube"
+      }
+    }
+  },
+  {
+    "id": "import_ml_model",
+    "summary": "Import a machine learning model from a workspace",
+    "description": "Imports a previously exported machine learning model from a specified workspace location. This is designed for intermediate model retrieval and can handle models in the backend language's native serialization format.\n\nUnlike load_ml_model, this process doesn't require STAC compliance or specific model formats (like ONNX), making it suitable for retrieving temporarily stored models between processes.",
+    "categories": [
+      "Import",
+      "machine learning"
+    ],
+    "experimental": true,
+    "parameters": [
+      {
+        "name": "name",
+        "description": "The name of the model to import. This should match the name used when the model was exported.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "folder",
+        "description": "The folder path within the server backend workspace where the model is stored.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "returns": {
+      "description": "The imported machine learning model in its original format.",
+      "schema": {
+        "type": "object",
+        "subtype": "ml-model"
       }
     }
   },
