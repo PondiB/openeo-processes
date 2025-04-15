@@ -10,7 +10,7 @@
     "parameters": [
         {
             "name": "uri",
-            "description": "The STAC Item to load the machine learning model from. The STAC Item must implement the `mlm-model` extension. This parameter can point to a remote STAC Item via ``URL`` or a local JSON file.",
+            "description": "The STAC Item to load the machine learning model from. The STAC Item must implement the [`mlm`](https://github.com/stac-extensions/mlm) extension. This parameter can point to a remote STAC Item via ``URL`` or a local JSON file.",
             "schema": [
                 {
                     "title": "URL",
