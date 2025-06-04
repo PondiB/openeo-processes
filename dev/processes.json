@@ -11282,7 +11282,7 @@
       },
       {
         "name": "target",
-        "description": "The column in the training set that represents the dependent variable for model training.",
+        "description": "The name of the variable in the training set that serves as the target for model training.",
         "schema": {
           "type": "string"
         }
@@ -13080,6 +13080,38 @@
           "type": "object",
           "subtype": "ml-model"
         }
+      },
+      {
+        "name": "name",
+        "description": "A distinct name of the model.",
+        "schema": {
+          "type": "string"
+        },
+        "required": true
+      },
+      {
+        "name": "tasks",
+        "description": "Specifies the ML tasks which the model can be used for.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "regression",
+              "classification",
+              "object-detection",
+              "detection",
+              "scene-classification",
+              "segmentation",
+              "semantic-segmentation",
+              "similarity-search",
+              "generative",
+              "image-captioning",
+              "super-resolution"
+            ]
+          }
+        },
+        "required": true
       },
       {
         "name": "options",
