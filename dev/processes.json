@@ -10490,39 +10490,6 @@
     }
   },
   {
-    "id": "import_cube",
-    "summary": "Import a data cube from a workspace",
-    "description": "Imports a previously exported data cube from a specified workspace location. This allows for reusing preprocessed data (e.g., cloud-removed, gap-filled, aggregated) across different machine learning workflows.",
-    "categories": [
-      "Import",
-      "machine learning"
-    ],
-    "experimental": true,
-    "parameters": [
-      {
-        "name": "name",
-        "description": "The name of the data cube to import. This should match the name used when the data cube was exported.",
-        "schema": {
-          "type": "string"
-        }
-      },
-      {
-        "name": "folder",
-        "description": "The folder path within the workspace where the data cube is stored.",
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
-    "returns": {
-      "description": "The imported data cube that can be used in subsequent processing steps.",
-      "schema": {
-        "type": "object",
-        "subtype": "datacube"
-      }
-    }
-  },
-  {
     "id": "inspect",
     "summary": "Add information to the logs",
     "description": "This process can be used to add runtime information to the logs, e.g. for debugging purposes. This process should be used with caution and it is recommended to remove the process in production workflows. For example, logging each value or array individually in a process such as ``apply()`` or ``reduce_dimension()`` could lead to a (too) large number of log entries. Several data structures (e.g. data cubes) are too large to log and will only return summaries of their contents.\n\nThe data provided in the parameter `data` is returned without changes.",
