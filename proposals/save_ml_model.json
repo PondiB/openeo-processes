@@ -9,8 +9,8 @@
     "experimental": true,
     "parameters": [
         {
-            "name": "data",
-            "description": "The data to store as a machine learning model.",
+            "name": "model",
+            "description": "The machine learning model to store.",
             "schema": {
                 "type": "object",
                 "subtype": "ml-model"
